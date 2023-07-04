@@ -21,7 +21,6 @@ OK: ../base/ldap-rbac
 OK: ../base/odf/resources/namespace
 FAILED: ../base/odf
 Failed path: ../base/odf/resources/namespace.yaml
-OK: ../base/managed-cluster/ch05-lkd01
 OK: ../base/image-registry
 .......
 .......
