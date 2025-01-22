@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/leonsteinhaeuser/kustomize-validator/validate"
+	"github.com/Oscarlind/kustomize-validator/validate"
 	"github.com/spf13/cobra"
 )
 

@@ -1,4 +1,4 @@
-module github.com/leonsteinhaeuser/kustomize-validator
+module github.com/Oscarlind/kustomize-validator
 
 go 1.23.2
 
