@@ -1,5 +1,7 @@
 project_name: kustomization-validator
 
+version: 2
+
 before:
   hooks:
     - go mod tidy
@@ -22,8 +24,8 @@ builds:
       - linux
 
 archives:
-  - format: tar.gz
-    # this name template makes the OS and Arch compatible with the results of uname.
+  - formats:
+      - tar.gz
     name_template: >-
       {{ .ProjectName }}_
       {{- title .Os }}_
@@ -155,11 +157,8 @@ docker_manifests:
 checksum:
   name_template: 'checksums.txt'
 
-snapshot:
-  name_template: "{{ incpatch .Version }}-snapshot"
-
 release:
-  draft: true
+  draft: false
   discussion_category_name: General
   prerelease: auto
   mode: append
