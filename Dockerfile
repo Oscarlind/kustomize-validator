@@ -6,8 +6,8 @@ ARG HELM_VERSION=v3.17.0 \
 WORKDIR /workspace
 ADD https://get.helm.sh/helm-${HELM_VERSION}-${GOOS}-${GOARCH}.tar.gz dest/helm.tar.gz
 ADD https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_${GOOS}_${GOARCH}.tar.gz dest/kustomize.tar.gz
-RUN tar -xvf dest/helm.tar.gz && \
-    tar -xvf dest/kustomize.tar.gz && \
+RUN tar -xvzf dest/helm.tar.gz && \
+    tar -xvzf dest/kustomize.tar.gz && \
     mv ${GOOS}-${GOARCH}/helm /usr/local/bin/helm && \
     mv kustomize /usr/local/bin/kustomize
 
