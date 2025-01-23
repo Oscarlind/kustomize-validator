@@ -62,71 +62,71 @@ dockers:
       - --build-arg=GOOS=linux
       - --build-arg=GOARCH=amd64
 
-  - use: buildx
-    dockerfile: Dockerfile
-    goos: linux
-    goarch: arm64
-    image_templates:
-    - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-arm64"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-arm64{{ end }}"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-arm64{{ end }}"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:latest-arm64{{ end }}"
-    build_flag_templates:
-      - --platform=linux/arm64
-      - --label=org.opencontainers.image.created={{ .Date }}
-      - --label=org.opencontainers.image.title={{ .ProjectName }}
-      - --label=org.opencontainers.image.revision={{ .FullCommit }}
-      - --label=org.opencontainers.image.version={{ .Version }}
-      - --label=org.label-schema.schema-version=1.0
-      - --label=org.label-schema.version={{ .Version }}
-      - --label=org.label-schema.name={{ .ProjectName }}
-      - --label=org.label-schema.build-date={{ .Date }}
-      - --build-arg=GOOS=linux
-      - --build-arg=GOARCH=arm64
+  #- use: buildx
+  #  dockerfile: Dockerfile
+  #  goos: linux
+  #  goarch: arm64
+  #  image_templates:
+  #  - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-arm64"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-arm64{{ end }}"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-arm64{{ end }}"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:latest-arm64{{ end }}"
+  #  build_flag_templates:
+  #    - --platform=linux/arm64
+  #    - --label=org.opencontainers.image.created={{ .Date }}
+  #    - --label=org.opencontainers.image.title={{ .ProjectName }}
+  #    - --label=org.opencontainers.image.revision={{ .FullCommit }}
+  #    - --label=org.opencontainers.image.version={{ .Version }}
+  #    - --label=org.label-schema.schema-version=1.0
+  #    - --label=org.label-schema.version={{ .Version }}
+  #    - --label=org.label-schema.name={{ .ProjectName }}
+  #    - --label=org.label-schema.build-date={{ .Date }}
+  #    - --build-arg=GOOS=linux
+  #    - --build-arg=GOARCH=arm64
 
-  - use: buildx
-    dockerfile: Dockerfile
-    goos: linux
-    goarch: s390x
-    image_templates:
-    - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-s390x"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-s390x{{ end }}"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-s390x{{ end }}"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:latest-s390x{{ end }}"
-    build_flag_templates:
-      - --platform=linux/s390x
-      - --label=org.opencontainers.image.created={{ .Date }}
-      - --label=org.opencontainers.image.title={{ .ProjectName }}
-      - --label=org.opencontainers.image.revision={{ .FullCommit }}
-      - --label=org.opencontainers.image.version={{ .Version }}
-      - --label=org.label-schema.schema-version=1.0
-      - --label=org.label-schema.version={{ .Version }}
-      - --label=org.label-schema.name={{ .ProjectName }}
-      - --label=org.label-schema.build-date={{ .Date }}
-      - --build-arg=GOOS=linux
-      - --build-arg=GOARCH=s390x
+  #- use: buildx
+  #  dockerfile: Dockerfile
+  #  goos: linux
+  #  goarch: s390x
+  #  image_templates:
+  #  - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-s390x"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-s390x{{ end }}"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-s390x{{ end }}"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:latest-s390x{{ end }}"
+  #  build_flag_templates:
+  #    - --platform=linux/s390x
+  #    - --label=org.opencontainers.image.created={{ .Date }}
+  #    - --label=org.opencontainers.image.title={{ .ProjectName }}
+  #    - --label=org.opencontainers.image.revision={{ .FullCommit }}
+  #    - --label=org.opencontainers.image.version={{ .Version }}
+  #    - --label=org.label-schema.schema-version=1.0
+  #    - --label=org.label-schema.version={{ .Version }}
+  #    - --label=org.label-schema.name={{ .ProjectName }}
+  #    - --label=org.label-schema.build-date={{ .Date }}
+  #    - --build-arg=GOOS=linux
+  #    - --build-arg=GOARCH=s390x
 
-  - use: buildx
-    dockerfile: Dockerfile
-    goos: linux
-    goarch: ppc64le
-    image_templates:
-    - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-ppc64le"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-ppc64le{{ end }}"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-ppc64le{{ end }}"
-    - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:latest-ppc64le{{ end }}"
-    build_flag_templates:
-      - --platform=linux/ppc64le
-      - --label=org.opencontainers.image.created={{ .Date }}
-      - --label=org.opencontainers.image.title={{ .ProjectName }}
-      - --label=org.opencontainers.image.revision={{ .FullCommit }}
-      - --label=org.opencontainers.image.version={{ .Version }}
-      - --label=org.label-schema.schema-version=1.0
-      - --label=org.label-schema.version={{ .Version }}
-      - --label=org.label-schema.name={{ .ProjectName }}
-      - --label=org.label-schema.build-date={{ .Date }}
-      - --build-arg=GOOS=linux
-      - --build-arg=GOARCH=ppc64le
+  #- use: buildx
+  #  dockerfile: Dockerfile
+  #  goos: linux
+  #  goarch: ppc64le
+  #  image_templates:
+  #  - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-ppc64le"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-ppc64le{{ end }}"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-ppc64le{{ end }}"
+  #  - "{{ if not .Prerelease }}{{ .Env.IMAGE_REPOSITORY }}:latest-ppc64le{{ end }}"
+  #  build_flag_templates:
+  #    - --platform=linux/ppc64le
+  #    - --label=org.opencontainers.image.created={{ .Date }}
+  #    - --label=org.opencontainers.image.title={{ .ProjectName }}
+  #    - --label=org.opencontainers.image.revision={{ .FullCommit }}
+  #    - --label=org.opencontainers.image.version={{ .Version }}
+  #    - --label=org.label-schema.schema-version=1.0
+  #    - --label=org.label-schema.version={{ .Version }}
+  #    - --label=org.label-schema.name={{ .ProjectName }}
+  #    - --label=org.label-schema.build-date={{ .Date }}
+  #    - --build-arg=GOOS=linux
+  #    - --build-arg=GOARCH=ppc64le
 
 docker_manifests:
   # https://goreleaser.com/customization/docker_manifest/
@@ -134,33 +134,33 @@ docker_manifests:
     skip_push: false
     image_templates:
       - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-amd64"
-      - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-arm64"
-      - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-s390x"
-      - "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-ppc64le"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-arm64"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-s390x"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:{{.Tag}}-ppc64le"
 
   - name_template: "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}"
     skip_push: auto
     image_templates:
       - "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-amd64"
-      - "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-arm64"
-      - "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-s390x"
-      - "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-ppc64le"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-arm64"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-s390x"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}-ppc64le"
 
   - name_template: "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}"
     skip_push: auto
     image_templates:
       - "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-amd64"
-      - "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-arm64"
-      - "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-s390x"
-      - "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-ppc64le"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-arm64"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-s390x"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:v{{ .Major }}.{{ .Minor }}-ppc64le"
 
   - name_template: "{{ .Env.IMAGE_REPOSITORY }}:latest"
     skip_push: auto
     image_templates:
       - "{{ .Env.IMAGE_REPOSITORY }}:latest-amd64"
-      - "{{ .Env.IMAGE_REPOSITORY }}:latest-arm64"
-      - "{{ .Env.IMAGE_REPOSITORY }}:latest-s390x"
-      - "{{ .Env.IMAGE_REPOSITORY }}:latest-ppc64le"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:latest-arm64"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:latest-s390x"
+      #- "{{ .Env.IMAGE_REPOSITORY }}:latest-ppc64le"
 
 checksum:
   name_template: 'checksums.txt'
