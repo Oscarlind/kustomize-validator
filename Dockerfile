@@ -22,4 +22,4 @@ COPY --from=dependencies /usr/local/bin/helm /usr/local/bin/helm
 COPY --from=dependencies /usr/local/bin/kustomize /usr/local/bin/kustomize
 USER 65532:65532
 
-ENTRYPOINT ["/kustomize-validator", "${BASE_PATH}", "-v ${ENABLE_VERBOSITY}", "-e ${ENABLE_ERROR_ONLY}"]
+ENTRYPOINT ["/kustomize-validator", "${BASE_PATH}", "-v", "${ENABLE_VERBOSITY}", "-e", "${ENABLE_ERROR_ONLY}"]
