@@ -12,7 +12,7 @@ RUN tar -xvzf dest/helm.tar.gz && \
     mv kustomize /usr/local/bin/kustomize
 
 # build final image
-FROM gcr.io/distroless/static:nonroot
+FROM alpine:latest
 ENV ENABLE_VERBOSITY=false \
     ENABLE_ERROR_ONLY=false \
     BASE_PATH=/
