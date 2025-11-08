@@ -50,7 +50,7 @@ spec:
   template:
     spec:
       containers:
-      - name: app
+      - name: app-abc
         image: nginx:latest
         env:
         - name: ENV
@@ -267,9 +267,9 @@ func Test_validateContent(t *testing.T) {
 					Name:        "my-service",
 					Namespace:   "default",
 					SourcePath:  "example/service.yaml",
-					FileContent: stdoutExample2,
+					FileContent: stdoutExample5,
 				},
-				check: "glob:PAT*_ME",
+				check: "glob:app-*",
 			},
 			wantErr: true,
 		},

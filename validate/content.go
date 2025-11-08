@@ -161,9 +161,26 @@ func createLiteralMatcher(pattern string) func(string) bool {
 }
 
 // createGlobMatcher creates a matcher function for glob pattern matching
+// The pattern can match anywhere in the line (substring matching)
 func createGlobMatcher(pattern string) func(string) bool {
+	// To allow the glob pattern to match anywhere in the line,
+	// we wrap it with wildcards if not already present
+	wrappedPattern := pattern
+	if !strings.HasPrefix(pattern, "*") {
+		wrappedPattern = "*" + wrappedPattern
+	}
+	if !strings.HasSuffix(pattern, "*") {
+		wrappedPattern = wrappedPattern + "*"
+	}
+
+	g, err := glob.Compile(wrappedPattern)
+	if err != nil {
+		// If glob compilation fails, fall back to literal matching
+		return createLiteralMatcher(pattern)
+	}
+
 	return func(line string) bool {
-		return glob.MustCompile(pattern).Match(line)
+		return g.Match(line)
 	}
 }
 
