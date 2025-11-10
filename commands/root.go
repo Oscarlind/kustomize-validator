@@ -129,5 +129,5 @@ func init() {
 	RootCmd.PersistentFlags().BoolP("verbose", "v", false, "verbose output")
 	RootCmd.PersistentFlags().BoolP("error-only", "e", false, "whether we should only log errors")
 	RootCmd.PersistentFlags().BoolP("table", "t", false, "output resources in table format")
-	checkArbitrary = RootCmd.PersistentFlags().StringSliceP("check", "c", []string{"PATCH_ME", "patch_me"}, "check for arbitrary validation in rendered kustomize output")
+	checkArbitrary = RootCmd.PersistentFlags().StringSliceP("check", "c", []string{"PATCH_ME", "patch_me"}, "check for arbitrary validation in rendered kustomize output.\nUse glob:pattern for glob matching, e.g., glob:PAT*_ME to match PAT123_ME\nor use the regex match pattern regex:app-.* to match app-123.\nIf no prefix is provided, literal substring matching is used (default).")
 }
