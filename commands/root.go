@@ -4,14 +4,18 @@ import (
 	"context"
 	"fmt"
 	"os"
-	"path/filepath"
-	"strings"
 	"time"
 
+	"github.com/Oscarlind/kustomize-validator/k8s"
 	"github.com/Oscarlind/kustomize-validator/validate"
 	"github.com/olekukonko/tablewriter"
 	"github.com/spf13/cobra"
-	"gopkg.in/yaml.v3"
+)
+
+var (
+	// checkArbitrary is a slice of strings to check for arbitrary validation in the rendered kustomize output
+	// It is set via command line flag
+	checkArbitrary *[]string = &[]string{}
 )
 
 var RootCmd = &cobra.Command{
@@ -32,7 +36,7 @@ var RootCmd = &cobra.Command{
 		cwd, _ := os.Getwd()
 
 		if isTable {
-			tableRows = append(tableRows, []string{"Relative path", "ApiVersion", "Kind", "Name", "Namespace"})
+			tableRows = append(tableRows, []string{"Relative path", "ApiVersion", "Kind", "Name", "Namespace", "Validation Error"})
 		}
 
 		msgChan := validate.KustomizeBuild(args[0])
@@ -53,14 +57,22 @@ var RootCmd = &cobra.Command{
 					break BREAK
 				}
 				totalCounter++
+				isError := false
 				if msg.Err != nil {
-					failureCounter++
-				} else {
-					successCounter++
+					isError = true
+				}
+
+				// all rendered resources from kustomize output
+				resources := k8s.ParseKustomizeOutput(msg.Stdout, msg.Path, cwd)
+
+				// if no error, validate content
+				rsrcs := validate.ValidateContent(resources, *checkArbitrary)
+				msg.Err = rsrcs.Error()
+				if rsrcs != nil {
+					isError = true
 				}
 
 				if isTable {
-					resources := parseKustomizeOutput(msg.Stdout, msg.Path, cwd)
 					for _, resource := range resources {
 						tableRows = append(tableRows, []string{
 							resource.SourcePath,
@@ -68,10 +80,17 @@ var RootCmd = &cobra.Command{
 							resource.Kind,
 							resource.Name,
 							resource.Namespace,
+							rsrcs.Find(resource.ApiVersion, resource.Kind, resource.Namespace, resource.Name).Error(),
 						})
 					}
 				} else {
 					fmt.Print(msg.Msg(isErrorOnly, isVerbose))
+				}
+
+				if isError {
+					failureCounter++
+				} else {
+					successCounter++
 				}
 			}
 		}
@@ -99,94 +118,16 @@ var RootCmd = &cobra.Command{
 
 			table.Render()
 		}
-
-		if !isTable {
-			fmt.Println("Total: ", validate.ColorF(validate.ColorBlue, "%d", totalCounter))
-			fmt.Println("Success: ", validate.ColorF(validate.ColorGreen, "%d", successCounter))
-			fmt.Println("Error: ", validate.ColorF(validate.ColorRed, "%d", failureCounter))
-			fmt.Println("Failed in %: ", validate.ColorF(validate.ColorRed, "%.2f%%", float64(failureCounter)/float64(totalCounter)*100))
-		}
+		fmt.Println("Total: ", validate.ColorF(validate.ColorBlue, "%d", totalCounter))
+		fmt.Println("Success: ", validate.ColorF(validate.ColorGreen, "%d", successCounter))
+		fmt.Println("Error: ", validate.ColorF(validate.ColorRed, "%d", failureCounter))
+		fmt.Println("Failed in %: ", validate.ColorF(validate.ColorRed, "%.2f%%", float64(failureCounter)/float64(totalCounter)*100))
 	},
-}
-
-type Resource struct {
-	ApiVersion string
-	Kind       string
-	Name       string
-	Namespace  string
-	SourcePath string
-}
-
-type KubernetesResource struct {
-	ApiVersion string `yaml:"apiVersion"`
-	Kind       string `yaml:"kind"`
-	Metadata   struct {
-		Name      string `yaml:"name"`
-		Namespace string `yaml:"namespace"`
-	} `yaml:"metadata"`
-}
-
-func parseKustomizeOutput(stdout, sourcePath, cwd string) []Resource {
-	if stdout == "" {
-		return []Resource{}
-	}
-
-	var resources []Resource
-	documents := strings.Split(stdout, "---")
-
-	for _, doc := range documents {
-		doc = strings.TrimSpace(doc)
-		if doc == "" {
-			continue
-		}
-
-		var resource KubernetesResource
-		err := yaml.Unmarshal([]byte(doc), &resource)
-		if err != nil {
-			continue
-		}
-
-		if resource.ApiVersion == "" || resource.Kind == "" || resource.Metadata.Name == "" {
-			continue
-		}
-
-		namespace := resource.Metadata.Namespace
-		if namespace == "" {
-			namespace = "default"
-		}
-
-		relativePath, err := filepath.Rel(cwd, sourcePath)
-		if err != nil {
-			relativePath = sourcePath
-		}
-
-		resources = append(resources, Resource{
-			ApiVersion: resource.ApiVersion,
-			Kind:       resource.Kind,
-			Name:       resource.Metadata.Name,
-			Namespace:  namespace,
-			SourcePath: relativePath,
-		})
-	}
-
-	return resources
-}
-
-func shortenPath(fullPath string) string {
-	path := strings.TrimPrefix(fullPath, "overlays/")
-	parts := strings.Split(path, "/")
-
-	if len(parts) > 4 {
-		return fmt.Sprintf("%s/%s/.../%s/%s", parts[0], parts[1], parts[len(parts)-2], parts[len(parts)-1])
-	}
-	if len(parts) > 2 {
-		return path
-	}
-	return path
 }
 
 func init() {
 	RootCmd.PersistentFlags().BoolP("verbose", "v", false, "verbose output")
 	RootCmd.PersistentFlags().BoolP("error-only", "e", false, "whether we should only log errors")
 	RootCmd.PersistentFlags().BoolP("table", "t", false, "output resources in table format")
+	checkArbitrary = RootCmd.PersistentFlags().StringSliceP("check", "c", []string{"PATCH_ME", "patch_me"}, "check for arbitrary validation in rendered kustomize output.\nUse glob:pattern for glob matching, e.g., glob:PAT*_ME to match PAT123_ME\nor use the regex match pattern regex:app-.* to match app-123.\nIf no prefix is provided, literal substring matching is used (default).")
 }
