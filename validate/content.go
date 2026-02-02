@@ -44,10 +44,15 @@ type Resources []Resource
 
 func (ve Resources) Error() error {
 	var msgs []string
-	for _, err := range ve {
-		msgs = append(msgs, err.Error())
+	for _, rsc := range ve {
+		if rsc.isError() {
+			msgs = append(msgs, rsc.Error())
+		}
 	}
-	return errors.New(strings.Join(msgs, "\n"))
+	if len(msgs) > 0 {
+		return errors.New(strings.Join(msgs, "\n"))
+	}
+	return nil
 }
 
 func (r Resources) Find(apiVersion, kind, namespace, name string) *Resource {
@@ -59,9 +64,13 @@ func (r Resources) Find(apiVersion, kind, namespace, name string) *Resource {
 	return &Resource{}
 }
 
+func (e *Resource) isError() bool {
+	return e != nil && e.Pattern != ""
+}
+
 // Error implements the error interface
 func (e *Resource) Error() string {
-	if e == nil || e.Pattern == "" {
+	if !e.isError() {
 		return ""
 	}
 	return fmt.Sprintf("validation failed: found '%s' in line %d for resource %s/%s/%s/%s", e.Pattern, e.LineNumber, e.ApiVersion, e.Kind, e.Namespace, e.Name)

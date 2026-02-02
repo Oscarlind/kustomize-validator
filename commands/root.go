@@ -68,7 +68,7 @@ var RootCmd = &cobra.Command{
 				// if no error, validate content
 				rsrcs := validate.ValidateContent(resources, *checkArbitrary)
 				msg.Err = rsrcs.Error()
-				if rsrcs != nil {
+				if msg.Err != nil {
 					isError = true
 				}
 
