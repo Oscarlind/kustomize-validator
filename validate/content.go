@@ -24,8 +24,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/Oscarlind/kustomize-validator/k8s"
 	"github.com/gobwas/glob"
+	"github.com/redhat-consulting-services/kustomize-validator/k8s"
 )
 
 type Resource struct {
