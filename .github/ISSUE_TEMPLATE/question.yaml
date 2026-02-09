@@ -1,0 +1,25 @@
+name: "❓ Question / Help"
+description: "Ask a question or request guidance about the kustomize-validator tool."
+title: "[QUESTION] "
+labels: ["question"]
+assignees: []
+projects: ["redhat-consulting-services/1"]
+
+body:
+  - type: input
+    id: environment
+    attributes:
+      label: "Environment / Platform"
+      description: "Describe your environment or platform (OS, OpenShift version, etc.)"
+
+  - type: textarea
+    id: question
+    attributes:
+      label: "Question / Issue"
+      description: "Describe your question or the issue you need help with."
+
+  - type: textarea
+    id: attempts
+    attributes:
+      label: "Steps Taken / Attempts"
+      description: "What have you tried so far?"

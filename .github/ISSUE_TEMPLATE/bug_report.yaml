@@ -1,0 +1,46 @@
+name: "🐛 Bug Report"
+description: "Report a problem with the kustomize-validator tool."
+title: "[BUG]: "
+labels: ["bug"]
+assignees: []
+projects: ["redhat-consulting-services/1"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **Before submitting a bug report:**
+        - Ensure you are using the latest version of the kustomize-validator tool.
+        - Check existing issues for duplicates.
+
+  - type: input
+    id: go_version
+    attributes:
+      label: "Go Version"
+      description: "Which version of Go are you using?"
+      placeholder: "e.g., 1.25.3"
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Bug Description"
+      description: "Describe the bug in detail."
+      placeholder: "Error messages, unexpected behavior, etc."
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Steps to Reproduce"
+      description: "List the steps to reproduce the bug."
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected Behavior"
+      description: "What did you expect to happen?"
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: "Actual Behavior"
+      description: "What actually happened?"
