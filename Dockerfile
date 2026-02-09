@@ -17,7 +17,7 @@ ENV ENABLE_VERBOSITY=false \
     ENABLE_ERROR_ONLY=false \
     BASE_PATH=/
 WORKDIR /
-COPY kustomization-validator /kustomize-validator
+COPY kustomize-validator /kustomize-validator
 COPY --from=dependencies /usr/local/bin/helm /usr/local/bin/helm
 COPY --from=dependencies /usr/local/bin/kustomize /usr/local/bin/kustomize
 USER 65532:65532

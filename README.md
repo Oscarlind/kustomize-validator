@@ -13,7 +13,7 @@ A simple script that will validate that all of the Kustomization files are build
 ## Building the script
 
 ```bash
-go build -o kustomization-validator main.go
+go build -o kustomize-validator main.go
 ```
 
 ## How to use it
@@ -21,7 +21,7 @@ go build -o kustomization-validator main.go
 Run the script from any location, and provide the base directory as an argument. The script will then recursively search for all kustomization.yaml or kustomization.yml files and try to build them.
 
 ```sh
-./kustomization-validator ./base/path
+./kustomize-validator ./base/path
 ```
 
 Optional flags:

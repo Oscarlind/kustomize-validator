@@ -1,4 +1,4 @@
-project_name: kustomization-validator
+project_name: kustomize-validator
 
 version: 2
 
@@ -8,9 +8,9 @@ before:
     - go generate ./...
 
 builds:
-  - id: kustomization-validator
+  - id: kustomize-validator
     main: main.go
-    binary: kustomization-validator
+    binary: kustomize-validator
     env:
       - CGO_ENABLED=0
     goarch:
@@ -34,7 +34,7 @@ archives:
       {{- else }}{{ .Arch }}{{ end }}
       {{- if .Arm }}v{{ .Arm }}{{ end }}
     builds:
-      - kustomization-validator
+      - kustomize-validator
     files:
       - LICENSE
       - README.md

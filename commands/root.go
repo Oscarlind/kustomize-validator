@@ -19,7 +19,7 @@ var (
 )
 
 var RootCmd = &cobra.Command{
-	Use:  "kustomization-validator",
+	Use:  "kustomize-validator",
 	Long: "A tool to validate Kustomization files",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
