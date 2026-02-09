@@ -6,9 +6,9 @@ import (
 	"os"
 	"time"
 
-	"github.com/Oscarlind/kustomize-validator/k8s"
-	"github.com/Oscarlind/kustomize-validator/validate"
 	"github.com/olekukonko/tablewriter"
+	"github.com/redhat-consulting-services/kustomize-validator/k8s"
+	"github.com/redhat-consulting-services/kustomize-validator/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -19,7 +19,7 @@ var (
 )
 
 var RootCmd = &cobra.Command{
-	Use:  "kustomization-validator",
+	Use:  "kustomize-validator",
 	Long: "A tool to validate Kustomization files",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {

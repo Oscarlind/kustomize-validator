@@ -1,4 +1,4 @@
-module github.com/Oscarlind/kustomize-validator
+module github.com/redhat-consulting-services/kustomize-validator
 
 go 1.23.2
 

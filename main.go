@@ -1,6 +1,6 @@
 package main
 
-import "github.com/Oscarlind/kustomize-validator/commands"
+import "github.com/redhat-consulting-services/kustomize-validator/commands"
 
 func main() {
 	err := commands.RootCmd.Execute()

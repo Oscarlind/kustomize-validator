@@ -3,7 +3,7 @@ package validate
 import (
 	"testing"
 
-	"github.com/Oscarlind/kustomize-validator/k8s"
+	"github.com/redhat-consulting-services/kustomize-validator/k8s"
 )
 
 var (

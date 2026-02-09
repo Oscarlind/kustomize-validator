@@ -6,8 +6,8 @@ on:
       - 'v*'
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_REPOSITORY: ghcr.io/oscarlind/kustomize-validator
+  REGISTRY: quay.io
+  IMAGE_REPOSITORY: quay.io/redhat-consulting-services/kustomize-validator
 
 jobs:
   release:
@@ -28,8 +28,8 @@ jobs:
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.QUAY_IO_USERNAME }}
+          password: ${{ secrets.QUAY_IO_PASSWORD }}
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
