@@ -1,5 +1,7 @@
 # Kustomization.yaml valdidator
 
+[![Docker Repository on Quay](https://quay.io/repository/redhat-consulting-services/kustomize-validator/status "Docker Repository on Quay")](https://quay.io/repository/redhat-consulting-services/kustomize-validator)
+
 A simple script that will validate that all of the Kustomization files are buildable. This script expects a base directory to start the recursive search from. It will then look for all the kustomization.yaml files and try to build them. If the build fails, it will print out the path to the failed kustomization.yaml file.
 
 ## Prerequisites
