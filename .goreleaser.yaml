@@ -22,6 +22,19 @@ builds:
       - "7"
     goos:
       - linux
+      - darwin
+      - windows
+    ignore:
+      - goos: darwin
+        goarch: amd64
+      - goos: darwin
+        goarch: s390x
+      - goos: darwin
+        goarch: ppc64le
+      - goos: windows
+        goarch: s390x
+      - goos: windows
+        goarch: ppc64le
 
 archives:
   - formats:
